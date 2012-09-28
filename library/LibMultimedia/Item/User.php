@@ -118,21 +118,25 @@ class LibMultimedia_Item_User extends LibMultimedia_Item_Abstract {
 		$response = $this->_connection->sendRequest(self::OBJECT, "put", $this->_data[$this->_idnetifier], $data, "post");
 	}
 	
-	public function reload() {
+	protected function _reload() {
 		// pokud se nejedna o plnohodnotny objekt, nacte se ze serveru
 		if (!$this->_isComplete) {
 			// nacteni pomocneho objektu
 			$tmp = self::load($this->_cleanData[$this->_idnetifier], $this->_connection);
 			
-			// prepis dat
-			$this->_allowedColumns = $tmp->_allowedColumns;
-			$this->_changed = array();
-			$this->_cleanData = $tmp->_cleanData;
-			$this->_data = $this->_cleanData;
-			$this->_groupList = $tmp->_groupList;
-			$this->_home = $tmp->_home;
+			// kopirovani dat
+			$this->_clone($tmp);
+			
 			$this->_isComplete = true;
-			$this->_roleList = $tmp->_roleList;
 		}
+	}
+	
+	protected function _clone(LibMultimedia_Item_User $o) {
+		parent::_clone($o);
+		
+		$this->_roleList = $tmp->_roleList;
+		
+		$this->_groupList = $tmp->_groupList;
+		$this->_home = $tmp->_home;
 	}
 }

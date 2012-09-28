@@ -20,7 +20,7 @@ class LibMultimedia_Item_Document extends LibMultimedia_Item_Abstract {
 	 * @param string $uuid uuid dokumentu
 	 * @return LibMultimedia_Item_Document
 	 */
-	public static function get($uuid) {
+	public static function load($id) {
 		
 	}
 	

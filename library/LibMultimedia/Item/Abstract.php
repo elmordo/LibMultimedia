@@ -150,4 +150,16 @@ class LibMultimedia_Item_Abstract {
 	 * @return void
 	 */
 	protected abstract function _reload();
+	
+	/**
+	 * okopiruje objekt
+	 * 
+	 * @param LibMultimedia_Item_Abstract $o puvodni objekt
+	 */
+	protected function _clone(LibMultimedia_Item_Abstract $o) {
+		$this->_data = $o->_data;
+		$this->_cleanData = $o->_cleanData;
+		$this->_changed = $o->_changed;
+		$this->_allowedColumns = $o->_allowedColumns;
+	}
 }

@@ -156,10 +156,32 @@ class LibMultimedia_Item_Directory extends LibMultimedia_Item_Abstract {
 		return $this->_path;
 	}
 	
+	protected function _reload() {
+		// pokud neni objekt kompletni, nacte se cely
+		if (!$this->_isComplete) {
+			// nacteni dat do pomocneho objektu
+			$tmp = self::load($this->_data[$this->_idnetifier]);
+			
+			// prepis dat
+			$this->_clone($tmp);
+			
+			$this->_isComplete = true;
+		}
+	}
+	
 	protected function _preprarePartialParams($dirInfo, $connection) {
 		return array(
 				"data" => $dirInfo,
 				"connection" => $connection
 		);
+	}
+	
+	protected function _clone(LibMultimedia_Item_Directory $o) {
+		parent::_clone($o);
+		
+		$this->_parent = $o->_parent;
+		$this->_childrenDirs = $o->_childrenDirs;
+		$this->_childrenDocs = $o->_childrenDocs;
+		$this->_path = $o->_path;
 	}
 }
