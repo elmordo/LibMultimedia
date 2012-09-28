@@ -46,7 +46,12 @@ class LibMultimedia_Item_Abstract {
 	 */
 	protected $_idnetifier = null;
 	
-	public function init();
+	/**
+	 * inicializacni funkce k prepsani potomkem
+	 */
+	public function init() {
+		
+	}
 	
 	public function __construct(array $params) {
 		// nastaveni defaultnich hodnot parametru
@@ -113,14 +118,36 @@ class LibMultimedia_Item_Abstract {
 		}
 	}
 	
+	public function toArray() {
+		return $this->_data;
+	}
+	
 	/**
 	 * ulozi data na server
 	 */
 	public abstract function save();
 	
-	public abstract static function load($id, $connection = null);
+	/**
+	 * nacte data ze serveru
+	 * 
+	 * @param string $id identifikator objektu
+	 * @param LibMultimedia_Connection $connection pripojeni k serveru
+	 * @return LibMultimedia_Item_Abstract
+	 */
+	public abstract static function load($id, LibMultimedia_Connection $connection = null);
 	
+	/**
+	 * vytvori novy objekt
+	 * 
+	 * @param array $data vychozi data
+	 * @param LibMultimedia_Connection $connection pripojeni k serveru
+	 * @return LibMultimedia_Item_Abstract 
+	 */
 	public abstract static function create(array $data, $connection = null);
 	
-	protected abstract function reload();
+	/**
+	 * znovunacte data ze serveru
+	 * @return void
+	 */
+	protected abstract function _reload();
 }

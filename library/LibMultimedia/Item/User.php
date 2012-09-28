@@ -104,13 +104,35 @@ class LibMultimedia_Item_User extends LibMultimedia_Item_Abstract {
 	}
 	
 	public function save() {
+		// sestaveni dat pro ulozeni
+		$data = array(
+				"user" => array(
+						"email" => $this->_data["email"],
+				)
+		);
 		
+		// kontrola zmeny hesla
+		if (in_array("password", $this->_changed)) $data["user"]["password"] = $this->_data["password"];
+		
+		// odeslani dat
+		$response = $this->_connection->sendRequest(self::OBJECT, "put", $this->_data[$this->_idnetifier], $data, "post");
 	}
 	
 	public function reload() {
 		// pokud se nejedna o plnohodnotny objekt, nacte se ze serveru
 		if (!$this->_isComplete) {
+			// nacteni pomocneho objektu
+			$tmp = self::load($this->_cleanData[$this->_idnetifier], $this->_connection);
 			
+			// prepis dat
+			$this->_allowedColumns = $tmp->_allowedColumns;
+			$this->_changed = array();
+			$this->_cleanData = $tmp->_cleanData;
+			$this->_data = $this->_cleanData;
+			$this->_groupList = $tmp->_groupList;
+			$this->_home = $tmp->_home;
+			$this->_isComplete = true;
+			$this->_roleList = $tmp->_roleList;
 		}
 	}
 }

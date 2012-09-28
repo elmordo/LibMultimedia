@@ -157,9 +157,21 @@ class LibMultimedia_Connection {
 		return $connection;
 	}
 	
-	protected static function _buildUrl($object, $action, $id = null) {
+	protected static function _buildUrl($object, $action, $id = null, $format = "json") {
 		// vygenerovani a vraceni url
 		switch ($object) {
+			case "directory":
+				switch ($action) {
+					case "get":
+						return "/directory/$id/get.$format";
+						
+					case "post":
+						return "/directory/$id/post";
+					
+					default:
+						throw new LibMultimedia_Connection_Exception("Unknown action '$action' in directory object");
+				}
+			
 			case "user" :
 				switch ($action) {
 					case "signin":
@@ -169,7 +181,10 @@ class LibMultimedia_Connection {
 						return "/user/$id/post";
 						
 					case "get":
-						return "/user/$id/get";
+						return "/user/$id/get.$format";
+						
+					case "put":
+						return "/user/$id/put";
 						
 					default:
 						throw new LibMultimedia_Connection_Exception("Unknown action '$action' in user object");
