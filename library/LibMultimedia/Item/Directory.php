@@ -31,6 +31,8 @@ class LibMultimedia_Item_Directory extends LibMultimedia_Item_Abstract {
 	 */
 	protected $_path = array();
 	
+	protected $_identifier = "id";
+	
 	public static function create(array $config, $connection = null) {
 		
 	}
@@ -108,7 +110,7 @@ class LibMultimedia_Item_Directory extends LibMultimedia_Item_Abstract {
 	 * smaze adresar ze serveru
 	 */
 	public function delete() {
-		$this->_connection->sendRequest(self::OBJECT, "delete", $this->_data[$this->_idnetifier], array(), Zend_Http_Client::GET);
+		$this->_connection->sendRequest(self::OBJECT, "delete", $this->_data[$this->_identifier], array(), Zend_Http_Client::GET);
 	}
 	
 	/**
@@ -156,17 +158,14 @@ class LibMultimedia_Item_Directory extends LibMultimedia_Item_Abstract {
 		return $this->_path;
 	}
 	
-	protected function _reload() {
-		// pokud neni objekt kompletni, nacte se cely
-		if (!$this->_isComplete) {
-			// nacteni dat do pomocneho objektu
-			$tmp = self::load($this->_data[$this->_idnetifier]);
-			
-			// prepis dat
-			$this->_clone($tmp);
-			
-			$this->_isComplete = true;
-		}
+	public function reload() {
+		// nacteni dat do pomocneho objektu
+		$tmp = self::load($this->_data[$this->_identifier]);
+		
+		// prepis dat
+		$this->_clone($tmp);
+		
+		$this->_isComplete = true;
 	}
 	
 	protected function _preprarePartialParams($dirInfo, $connection) {

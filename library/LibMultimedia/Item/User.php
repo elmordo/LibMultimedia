@@ -9,6 +9,8 @@ class LibMultimedia_Item_User extends LibMultimedia_Item_Abstract {
 	
 	protected $_home = null;
 	
+	protected $_identifier = "id";
+	
 	/**
 	 * vytvor noveho uzivatele
 	 * 
@@ -115,20 +117,17 @@ class LibMultimedia_Item_User extends LibMultimedia_Item_Abstract {
 		if (in_array("password", $this->_changed)) $data["user"]["password"] = $this->_data["password"];
 		
 		// odeslani dat
-		$response = $this->_connection->sendRequest(self::OBJECT, "put", $this->_data[$this->_idnetifier], $data, "post");
+		$response = $this->_connection->sendRequest(self::OBJECT, "put", $this->_data[$this->_identifier], $data, "post");
 	}
 	
-	protected function _reload() {
-		// pokud se nejedna o plnohodnotny objekt, nacte se ze serveru
-		if (!$this->_isComplete) {
-			// nacteni pomocneho objektu
-			$tmp = self::load($this->_cleanData[$this->_idnetifier], $this->_connection);
+	public function reload() {
+		// nacteni pomocneho objektu
+		$tmp = self::load($this->_cleanData[$this->_identifier], $this->_connection);
 			
-			// kopirovani dat
-			$this->_clone($tmp);
+		// kopirovani dat
+		$this->_clone($tmp);
 			
-			$this->_isComplete = true;
-		}
+		$this->_isComplete = true;
 	}
 	
 	protected function _clone(LibMultimedia_Item_User $o) {

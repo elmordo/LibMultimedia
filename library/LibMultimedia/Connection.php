@@ -167,9 +167,33 @@ class LibMultimedia_Connection {
 						
 					case "post":
 						return "/directory/$id/post";
+						
+					case "put":
+						return "/directory/$id/put";
+						
+					case "delete":
+						return "/directory/$id/delete";
 					
 					default:
 						throw new LibMultimedia_Connection_Exception("Unknown action '$action' in directory object");
+				}
+				
+			case "document":
+				switch ($action) {
+					case "download":
+						return "/document/get/$id";
+					
+					case "get":
+						return "/document/$id/get";
+						
+					case "post":
+						return "/document/post";
+						
+					case "put":
+						return "/document/$id/put";
+						
+					default:
+						throw new LibMultimedia_Connection_Exception("Unknown action '$action' id document object");
 				}
 			
 			case "user" :

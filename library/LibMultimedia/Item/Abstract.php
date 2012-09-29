@@ -44,7 +44,7 @@ class LibMultimedia_Item_Abstract {
 	/**
 	 * jmeno sloupce s identifikatorem
 	 */
-	protected $_idnetifier = null;
+	protected $_identifier = null;
 	
 	/**
 	 * inicializacni funkce k prepsani potomkem
@@ -149,7 +149,7 @@ class LibMultimedia_Item_Abstract {
 	 * znovunacte data ze serveru
 	 * @return void
 	 */
-	protected abstract function _reload();
+	public abstract function reload();
 	
 	/**
 	 * okopiruje objekt
